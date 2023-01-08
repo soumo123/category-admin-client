@@ -60,6 +60,18 @@ const OrderList = () => {
             },
         },
         {
+            field: "createdAt",
+            headerName: "Order Date",
+            minWidth: 150,
+            flex: 0.5,
+          },
+          {
+            field: "deliveredAt",
+            headerName: "Delivery Date",
+            minWidth: 250,
+            flex: 0.3,
+          },
+        {
             field: "itemsQty",
             headerName: "Items Qty",
             type: "number",
@@ -110,6 +122,9 @@ const OrderList = () => {
                 itemsQty: item.orderItems.length,
                 amount: item.totalPrice,
                 status: item.orderStatus,
+                createdAt:new Date(item.createdAt).toLocaleDateString('en-GB'),
+                deliveredAt:new Date(item.deliveredAt).toLocaleDateString('en-GB'),
+              
             });
         });
 

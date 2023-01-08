@@ -19,12 +19,7 @@ const Header = () => {
         <Navbar.Brand href="/"><h3 className="font-link">Shopgo.in</h3></Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
-          <Nav className="m-auto">
-            <Nav.Link href="/">Home</Nav.Link>
-            <Nav.Link href="/products">Products</Nav.Link>
-            <Nav.Link href="/contact">Contact</Nav.Link>
-            <Nav.Link href="/search">search</Nav.Link>
-          </Nav>
+          
         <UserOptions/>
         </Navbar.Collapse>
       </Container>

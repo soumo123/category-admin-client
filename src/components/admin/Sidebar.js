@@ -35,12 +35,11 @@ const Sidebar = () => {
                         <div className="navi">
                             <ul>
                                 <li className="active"><Link to="/"><i className="fa fa-home" aria-hidden="true"></i><span className="hidden-xs hidden-sm">Home</span></Link></li>
-                                <li><Link to="/admin/dashboard"><i className="fa fa-tasks" aria-hidden="true"></i><span className="hidden-xs hidden-sm">Dashboard</span></Link></li>
+            
                                 <li><Link to="/admin/products"><i className="fa fa-bar-chart" aria-hidden="true"></i><span className="hidden-xs hidden-sm">All Products</span></Link></li>
                                 <li><Link to="/admin/create"><i className="fa fa-plus" aria-hidden="true"></i><span className="hidden-xs hidden-sm">Add Product</span></Link></li>
                                 <li><Link to="/admin/orders"><i className="fa fa-shopping-cart" aria-hidden="true"></i><span className="hidden-xs hidden-sm">Orders</span></Link></li>
-                                <li><Link to="/admin/users"><i className="fa fa-user" aria-hidden="true"></i><span className="hidden-xs hidden-sm">Users</span></Link></li>
-                                <li><Link to="/admin/reviews"><i className="fa fa-commenting-o" aria-hidden="true"></i><span className="hidden-xs hidden-sm">Reviews</span></Link></li>
+                                
                             </ul>
                         </div>
                     </div>
