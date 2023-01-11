@@ -118,7 +118,7 @@ export const createProduct = (productData) => async (dispatch) => {
                 
             }
         }
-        const { data } = await axios.post(`${process.env.REACT_APP_PRODUCTION_URL}/api/soummya/admin/product/new/${token}`,productData,config)
+        const { data } = await axios.post(`${process.env.REACT_APP_PRODUCTION_URL}/api/soummya/cat-admin/product/new/${token}`,productData,config)
        
         dispatch({ type: NEW_PRODUCT_SUCCESS, payload: data })
 
@@ -135,14 +135,23 @@ export const createProduct = (productData) => async (dispatch) => {
 
 
 //get products by admin
-export const getAdminProducts = () => async (dispatch) => {
+export const getAdminProducts = (user_id) => async (dispatch) => {
 
     try {
 
         const token = localStorage.getItem('token')
         dispatch({type:ADMIN_PRODUCT_REQUEST})
+        const config = {
+            headers: {
+                'Content-Type': "application/json",
+                // 'Accept':"/"
+            },
+            withCredentials: true
+        }
 
-        const {data} = await axios.get(`${process.env.REACT_APP_PRODUCTION_URL}/api/soummya/admin/products/${token}`)
+
+        const {data} = await axios.post(`${process.env.REACT_APP_PRODUCTION_URL}/api/soummya/cat-admin/products/${token}`,user_id,config)
+        console.log("dataaaaaa",data)
       
         dispatch({type:ADMIN_PRODUCT_SUCCESS,payload:data.products})
 

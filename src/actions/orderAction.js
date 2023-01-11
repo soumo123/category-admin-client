@@ -100,14 +100,22 @@ export const getOrderDetails = (id) => async (dispatch) => {
 
 //Get all orders by admin 
 
-export const getAllOrders = () => async (dispatch) => {
+export const getAllOrders = (user_id) => async (dispatch) => {
 
     try {
 
         const token = localStorage.getItem('token')
         dispatch({ type: ALL_ORDER_REQUEST })
+        const config = {
+            headers: {
+                'Content-Type': "application/json",
+                // 'Accept':"/"
+            },
+            withCredentials: true
+        }
 
-        const { data } = await axios.get(`${process.env.REACT_APP_PRODUCTION_URL}/api/soummya/admin/orders/${token}`)
+        const { data } = await axios.post(`${process.env.REACT_APP_PRODUCTION_URL}/api/soummya/cat-admin/orders/${token}`,user_id,config)
+        console.log()
         dispatch({ type: ALL_ORDER_SUCCESS, payload: data.orders })
 
 

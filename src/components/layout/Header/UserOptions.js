@@ -23,7 +23,7 @@ const UserOptions = () => {
     localStorage.removeItem("token")
     localStorage.removeItem("profile")
     toast.success("Logout Succesfully ");
-    navigate('/products')
+    navigate('/')
 
     setInterval(() => {
       window.location.reload();
@@ -45,17 +45,9 @@ const UserOptions = () => {
           <>
             <Nav.Link>
               <li className="nav-item dropdown">
-                <Link className="nav-link dropdown-toggle" to="" data-bs-toggle="dropdown" aria-expanded="true">
+                <Link className="nav-link" to="" data-bs-toggle="dropdown" aria-expanded="true">
                   <img src={profileImage} />
                 </Link>
-
-
-
-                <ul className="dropdown-menu">
-                  <li><Link className="dropdown-item" to="/login" ><i class="fa fa-sign-in" aria-hidden="true"></i>Login</Link></li>
-                  <li><Link className="dropdown-item item-count" to="/cart" ><i class="fa fa-shopping-cart" aria-hidden="true"></i>
-                        Cart <span>{cartItems.length}</span> </Link></li>
-                </ul>
               </li>
             </Nav.Link>
           </>
@@ -75,27 +67,11 @@ const UserOptions = () => {
                   user?.role === "admin" ?
 
                     <ul class="dropdown-menu">
-
-                      <li><Link className="dropdown-item" to="/order"><i class="fa fa-shopping-bag" aria-hidden="true"></i>
-                        Orders</Link></li>
-                      <li><Link className="dropdown-item" to="/account" ><i class="fa fa-user" aria-hidden="true"></i>
-                        Account</Link></li>
-                      <li><Link className="dropdown-item" to="/admin/dashboard"><i class="fa fa-tachometer" aria-hidden="true"></i>
-                        Dashboard</Link></li>
-                      <li><Link className="dropdown-item item-count" to="/cart" ><i class="fa fa-shopping-cart" aria-hidden="true"></i>
-                        Cart <span>{cartItems.length}</span> </Link></li>
                       <li><p className="dropdown-item" onClick={logout} ><i class="fa fa-sign-out" aria-hidden="true"></i>
                         Logout</p></li>
 
 
-                    </ul> : <ul class="dropdown-menu">
-                      <li><Link className="dropdown-item" to="/account">Account</Link></li>
-                      <li><Link className="dropdown-item" to="/order">Orders</Link></li>
-                      <li><Link className="dropdown-item item-count" to="/cart" ><i class="fa fa-shopping-cart" aria-hidden="true"></i>
-                        Cart <span>{cartItems.length}</span> </Link></li>
-                      <li ><p className="dropdown-item" onClick={logout} >Logout</p></li>
-
-                    </ul>
+                    </ul> :<></>
                 }
 
 

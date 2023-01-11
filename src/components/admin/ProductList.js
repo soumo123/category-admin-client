@@ -17,6 +17,7 @@ const ProductList = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const {error,products} = useSelector((state) => state.products)
+  const{user} = useSelector((state)=>state.user)
   const{isDeleted} = useSelector((state) => state.productAdmin)
 
 const deleteProductHandler = (id)=>{
@@ -32,7 +33,7 @@ const deleteProductHandler = (id)=>{
       alert.error(error);
       dispatch(getProclearErrors());
     }
-    dispatch(getAdminProducts());
+    dispatch(getAdminProducts({user_id:user?._id}));
 
     if(isDeleted){
       alert.success("Product Deleted Succesfully")
@@ -74,6 +75,20 @@ const deleteProductHandler = (id)=>{
       minWidth: 150,
       flex: 0.3,
     },
+    {
+      field: "discount",
+      headerName: "Discount",
+      type: "number",
+      minWidth: 150,
+      flex: 0.3,
+    },
+    {
+      field: "actualpricebydiscount",
+      headerName: "Actual-Price",
+      type: "number",
+      minWidth: 150,
+      flex: 0.3,
+    },
 
     {
       field: "actions",
@@ -89,13 +104,13 @@ const deleteProductHandler = (id)=>{
               <EditIcon />
             </Link>
 
-            <Button
+            {/* <Button
               onClick={() =>
                 deleteProductHandler(params.getValue(params.id, "id"))
               }
             >
               <DeleteIcon />
-            </Button>
+            </Button> */}
           </>
         );
       },
@@ -110,6 +125,8 @@ const deleteProductHandler = (id)=>{
         id: item._id,
         stock: item.stock,
         price: `₹`+item.price,
+        discount:item && item.discount==0 ? "No Discount" : item.discount+`%`,
+        actualpricebydiscount:`₹`+item.actualpricebydiscount,
         name: item.name,
         createdAt:new Date(item.createdAt).toLocaleDateString('en-GB')
       });

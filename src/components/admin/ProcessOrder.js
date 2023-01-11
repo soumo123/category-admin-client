@@ -68,11 +68,11 @@ const ProcessOrder = () => {
                       {order.orderItems &&
                         order.orderItems.map((item) => (
                           <li>
-                            <Link to={`/product/${item.product}`}>
+                            
                               <div key={item.product}>
                                 <img className="img-fluid" src={item.image} alt="Product" />
                               </div>
-                            </Link>
+                          
                           </li>
 
 

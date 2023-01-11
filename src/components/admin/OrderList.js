@@ -20,6 +20,8 @@ const OrderList = () => {
     const navigate = useNavigate()
     const { error, orders } = useSelector((state) => state.allOrders)
     const { isDeleted } = useSelector((state) => state.order)
+    const{user} = useSelector((state)=>state.user)
+    
 
     const deleteOrderHandler = (id) => {
         dispatch(deleteOrder(id))
@@ -39,7 +41,7 @@ const OrderList = () => {
           
         }
 
-        dispatch(getAllOrders());
+        dispatch(getAllOrders({user_id:user?._id}));
     }, [error, dispatch,alert, isDeleted]);
 
 
@@ -99,14 +101,6 @@ const OrderList = () => {
                         <Link to={`/admin/order/${params.getValue(params.id, "id")}`}>
                             <EditIcon />
                         </Link>
-
-                        <Button
-                            onClick={() =>
-                                deleteOrderHandler(params.getValue(params.id, "id"))
-                            }
-                        >
-                            <DeleteIcon />
-                        </Button>
                     </>
                 );
             },

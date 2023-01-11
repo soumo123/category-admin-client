@@ -15,7 +15,9 @@ import ProductList from './components/admin/ProductList';
 import NewProduct from './components/admin/NewProduct';
 import UpdateProduct from './components/admin/UpdateProduct';
 import OrderList from './components/admin/OrderList';
+import ProcessOrder from './components/admin/ProcessOrder';
 import Home from './components/users/Home'
+import Approved from './components/users/Approved';
 
 
 function App() {
@@ -50,11 +52,12 @@ const {order} = useSelector((state)=>state.newOrder)
      
        <Route exact path="/login" element={<Authentication />} />
    
-      {user?.role === "admin" ?  <Route exact path="/" element={<Dashboard/>}/> : <Route exact path="/" element={<Home/>}/>}
+      {user?.role === "admin" ?  <Route exact path="/" element={<Dashboard/>}/> : user?.role=="user" ? <Route exact path="/" element={<Approved/>}/>:<Route exact path="/" element={<Home/>}/>}
       {user?.role === "admin" ?  <Route exact path="/admin/products" element={<ProductList/>}/> : user?.role ==="user" ? <Route exact path="/admin/prducts" element={<Dashboard/>}/> : <Route exact path="/admin/dashboard" element={<Dashboard/>}/>}
       {user?.role === "admin" ?  <Route exact path="/admin/create" element={<NewProduct/>}/> : user?.role ==="user" ? <Route exact path="/admin/prducts" element={<Dashboard/>}/> : <Route exact path="/admin/dashboard" element={<Dashboard/>}/>}
       {user?.role === "admin" ?  <Route exact path="/admin/product/:id" element={<UpdateProduct/>}/> : user?.role ==="user" ? <Route exact path="/admin/prducts" element={<Dashboard/>}/> : <Route exact path="/admin/dashboard" element={<Dashboard/>}/>}
       {user?.role === "admin" ?  <Route exact path="/admin/orders" element={<OrderList/>}/> : user?.role ==="user" ? <Route exact path="/admin/prducts" element={<Dashboard/>}/> : <Route exact path="/admin/dashboard" element={<Dashboard/>}/>}
+      {user?.role === "admin" ?  <Route exact path="/admin/order/:id" element={<ProcessOrder/>}/> : user?.role ==="user" ? <Route exact path="/admin/prducts" element={<Dashboard/>}/> : <Route exact path="/admin/dashboard" element={<Dashboard/>}/>}
       
 
       </Routes>

@@ -7,7 +7,6 @@ import Chart from 'chart.js/auto';
 import {useSelector,useDispatch} from 'react-redux'
 import { getAdminProducts } from '../../actions/productAction'
 import { getAllOrders } from '../../actions/orderAction';
-import { getAllUsers } from '../../actions/userAction';
 import Metadata from '../layout/Metadata';
 
 
@@ -23,6 +22,7 @@ let totalAmount = 0;
 const {products} = useSelector((state) => state.products)
 const{orders} = useSelector((state) => state.allOrders)
 const{users} = useSelector((state) => state.allUsers)
+const{user} = useSelector((state)=>state.user)
 
 orders &&
   orders.forEach((item) => {
@@ -38,10 +38,9 @@ products && products.map((item)=>{
 
 
 useEffect(() => {
-  dispatch(getAdminProducts());
-  dispatch(getAllOrders())
-  dispatch(getAllUsers())
-}, [dispatch]);
+  dispatch(getAdminProducts({user_id:user?._id}));
+  dispatch(getAllOrders({user_id:user?._id}));
+}, [dispatch,user]);
 
   const lineState = {
     labels: ["Initial Amount", "Amount Earned"],
@@ -77,7 +76,7 @@ useEffect(() => {
                    </div>
                    <div className="number">
                    <div className="numbers">
-                   <p>₹{totalAmount.toFixed(1)}</p>
+                   <p>₹{totalAmount}</p>
                    </div>
                    </div>
                 </div>
@@ -95,24 +94,6 @@ useEffect(() => {
                    <div className="number">
                    <div className="numbers">
                    <p>{products && products.length}</p>
-                   </div>
-                   </div>
-                </div>
-              
-           </Link>
-            </div>
-          </div>
-          <div className="col-sm-3">
-            <div className="productbox">
-            <Link to="/admin/users">
-            <div className="d-sm-flex productitem align-items-center">
-              
-                   <div className="amout">
-                   <p>Users</p>
-                   </div>
-                   <div className="number">
-                   <div className="numbers">
-                   <p>{users && users.length}</p>
                    </div>
                    </div>
                 </div>

@@ -5,8 +5,12 @@ import '../../css/home.css'
 const Home = () => {
   return (
     <>
+     <h1 className="h1">Sellers Dashboard Portal</h1>
     <Link to="/login">
-    <button className='btn btn-primary lgn-btn'>login</button>
+   
+      <div className=" login-button">  
+    <button type="button" className="btn btn-primary">Please login or Register</button>
+    </div>
     </Link>
     </>
   )

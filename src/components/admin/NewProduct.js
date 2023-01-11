@@ -249,13 +249,11 @@ const createProductImagesChange = (e) => {
                                 
                                     <div className="col-sm-4 ">
                                         <div className="mb-3">
-                                            <label className="form-label">Image</label>
+                                            <label for="formFileMultiple" className="form-label">Image</label>
 
                                             <input
                                                 type="file" className="form-control inputtext"
                                                 placeholder="Choose the image"
-                                                
-                                                
                                                 accept="image/*"
                                                 onChange={createProductImagesChange}
                                                 multiple
