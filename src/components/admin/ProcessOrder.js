@@ -15,6 +15,8 @@ const ProcessOrder = () => {
 
   const { isUpdated } = useSelector((state) => state.order)
   const { order, error, loading } = useSelector((state) => state.orderDetails)
+
+
   const paramsId = useParams()
   const dispatch = useDispatch()
 
@@ -53,172 +55,308 @@ const ProcessOrder = () => {
 
 
   return (
-  
-      <>
-        {
-          loading ? <Loader /> :
-            <>
+    <>
+      {
+        loading ? <Loader /> :
 
-              <Metadata title="Process Order" />
-              <div className="container">
+          <>
+            <Metadata title="Process Order" />
+            <div className="container">
+              <div className="row mt-5 mb-5 justify-content-center">
+                <div className="col-sm-3">
+                  {
+                    order && order?.orders?.map((item) => (
 
-                <div className="row mt-5 mb-5 justify-content-center">
-                  <div className="col-sm-3">
-                    <ul className="detail-image">
-                      {order.orderItems &&
-                        order.orderItems.map((item) => (
-                          <li>
-                            
-                              <div key={item.product}>
-                                <img className="img-fluid" src={item.image} alt="Product" />
-                              </div>
-                          
-                          </li>
+                      <div>
 
+                        <div key={item.product}>
+                          <img className="img-fluid" src={item.image} alt="Product" />
 
+                        </div>
 
-                        ))}
-                    </ul>
+                        <div>
 
-                  </div>
-
-                  <div className="col-sm-5">
-                    <div className="order-details">
-                      <h4 className="mb-4">Order Items</h4>
-                      <p>Shipping Info</p>
-                      <p>Name : <span>{order.user && order.user.name}</span></p>
-                      <p>Phone : <span>{order.shippingInfo && order.shippingInfo.phoneNo}</span></p>
-                      <p>Address : <span>{order.shippingInfo &&
-                            `${order.shippingInfo.address}, ${order.shippingInfo.city}, ${order.shippingInfo.state}, ${order.shippingInfo.pinCode}, ${order.shippingInfo.country}`}</span></p>
-
-
-
-                      {
-                        order?.orderItems?.map((item) => (
+                          <p>Prodcut Name : {item.name}</p>
+                          <p>Price :₹ {item.price}</p>
+                          <p>Quantity : {item.quantity}</p>
+                          <p>Delivery Date : {new Date(item.deliveryTime).toLocaleDateString('en-GB')}</p>
+                          <p>Customer Id : {item.user}</p>
                           <div>
-                            <p>Item :  <span>{item.name}</span></p>
-                            <p>{item.quantity} X ₹{item.price} ={" "}
-                              <b>₹{(item.price * item.quantity).toFixed(1)}</b></p>
+                            <b><p>Order Status</p></b>
+                            <p
+                              className={
+                                item.status && item.status === "Delivered"
+                                  ? "greenColor"
+                                  : "redColor"
+                              }
+                            >
+                              {item.status}
+                            </p>
+                            <p>Customer Name : {order?.customer_name}</p>
+                            <div>
+                              <p>Address : <span>{order?.shippingDetails.address}</span></p>
+                              <p>City : <span>{order?.shippingDetails.city}</span></p>
+                              <p>State : <span>{order?.shippingDetails.state}</span></p>
+                              <p>Country : <span>{order?.shippingDetails.country}</span></p>
+                              <p>Pincode : <span>{order?.shippingDetails.pincode}</span></p>
+                              <p>Phone Number  : <span>{order?.shippingDetails.phoneNo}</span></p>
+
+
+
+
+
+                            </div>
+                            <div
+                              style={{
+                                display: item.status === "Delivered" ? "none" : "block",
+                              }}
+                            >
+                              <form
+                                className="updateOrderForm"
+                                onSubmit={updateOrderSubmitHandler}
+                              >
+                                {/* <h1>Process Order</h1> */}
+
+                                <div>
+
+                                  <select onChange={(e) => setStatus(e.target.value)}>
+                                    <option value="">Choose Category</option>
+                                    {item.status === "Processing" && (
+                                      <option value="Shipped">Shipped</option>
+                                    )}
+
+                                    {item.status === "Shipped" && (
+                                      <option value="Delivered">Delivered</option>
+                                    )}
+                                  </select>
+                                </div>
+
+                                <Button
+                                  variant="secondary"
+                                  id="createProductBtn"
+                                  type="submit"
+                                  disabled={
+                                    loading ? true : false || status === "" ? true : false
+                                  }
+                                >
+                                  Process
+                                </Button>
+                              </form>
+                              <ToastContainer
+                                position="top-center"
+                                autoClose={1000}
+                                hideProgressBar={false}
+                                newestOnTop={false}
+                                closeOnClick
+                                rtl={false}
+                                pauseOnFocusLoss
+                                draggable
+                                pauseOnHover />
+
+
+                            </div>
+
+
+
+
 
                           </div>
-
-                        ))
-                      }
-
-
-
-
-                      <div>
-
-
+                        </div>
 
                       </div>
 
-                    </div>
 
-                  </div>
-
-                  <div className="col-sm-3">
-
-                    <div className="order-details">
-
-                      <h4 className="mb-4">Payment</h4>
-                      <p className={
-                        order.paymentInfo && order.paymentInfo.status === "succeeded" ? "green" : "red"
-                      }>
-                        {
-                          order.paymentInfo && order.paymentInfo.status === "succeeded" ? "PAID" : "NOT PAID"
-                        }
-
-                      </p>
-
-                      <div>
-                        <p>Total Price :<span>₹{order.totalPrice && order.totalPrice.toFixed(1)} </span></p>
-
-                      </div>
-                      <div>
-                        <b><p>Order Status</p></b>
-                        <p
-                          className={
-                            order.orderStatus && order.orderStatus === "Delivered"
-                              ? "greenColor"
-                              : "redColor"
-                          }
-                        >
-                          {order.orderStatus && order.orderStatus}
-                        </p>
-
-
-                      </div>
-                      <div
-                  style={{
-                    display: order.orderStatus === "Delivered" ? "none" : "block",
-                  }}
-                >
-<form
-                    className="updateOrderForm"
-                    onSubmit={updateOrderSubmitHandler}
-                  >
-                    {/* <h1>Process Order</h1> */}
-
-                    <div>
-
-                      <select onChange={(e) => setStatus(e.target.value)}>
-                        <option value="">Choose Category</option>
-                        {order.orderStatus === "Processing" && (
-                          <option value="Shipped">Shipped</option>
-                        )}
-
-                        {order.orderStatus === "Shipped" && (
-                          <option value="Delivered">Delivered</option>
-                        )}
-                      </select>
-                    </div>
-
-                    <Button
-                     variant="secondary"
-                      id="createProductBtn"
-                      type="submit"
-                      disabled={
-                        loading ? true : false || status === "" ? true : false
-                      }
-                    >
-                      Process
-                    </Button>
-                  </form>
-                  <ToastContainer
-                  position="top-center"
-                  autoClose={1000}
-                  hideProgressBar={false}
-                  newestOnTop={false}
-                  closeOnClick
-                  rtl={false}
-                  pauseOnFocusLoss
-                  draggable
-                  pauseOnHover />
-
+                    ))
+                  }
 
                 </div>
-                    </div>
-                  </div> </div>
-
-
-
-
-
-
 
               </div>
 
 
+            </div>
+
+          </>
+      }
+
+    </>
+
+
+    // <>
+    //   {
+    //     loading ? <Loader /> :
+    //       <>
+
+    //         <Metadata title="Process Order" />
+    //         <div className="container">
+
+    //           <div className="row mt-5 mb-5 justify-content-center">
+    //             <div className="col-sm-3">
+    //               <ul className="detail-image">
+    //                 {
+    //                   order && order?.orders?.map((item) => (
+    //                     <li>
+
+    //                       <div key={item.product}>
+    //                         <img className="img-fluid" src={item.image} alt="Product" />
+
+    //                       </div>
+
+    //                     </li>
 
 
 
-            </>
-        }
+    //                   ))}
+    //               </ul>
+
+    //             </div>
+
+    //             {/* <div className="col-sm-5">
+    //                 <div className="order-details">
+    //                   <h4 className="mb-4">Order Items</h4>
+    //                   <p>Shipping Info</p>
+    //                   <p>Name : <span>{order.user && order.user.name}</span></p>
+    //                   <p>Phone : <span>{order.shippingInfo && order.shippingInfo.phoneNo}</span></p>
+    //                   <p>Address : <span>{order.shippingInfo &&
+    //                         `${order.shippingInfo.address}, ${order.shippingInfo.city}, ${order.shippingInfo.state}, ${order.shippingInfo.pinCode}, ${order.shippingInfo.country}`}</span></p>
 
 
-      </>
+
+    //                   {
+    //                     order?.orderItems?.map((item) => (
+    //                       <div>
+    //                         <p>Item :  <span>{item.name}</span></p>
+    //                         <p>{item.quantity} X ₹{item.price} ={" "}
+    //                           <b>₹{(item.price * item.quantity).toFixed(1)}</b></p>
+
+    //                       </div>
+
+    //                     ))
+    //                   }
+
+
+
+
+    //                   <div>
+
+
+
+    //                   </div>
+
+    //                 </div>
+
+    //               </div> */}
+
+    //             <div className="col-sm-3">
+
+    //               <div className="order-details">
+
+    //                 <h4 className="mb-4">Payment</h4>
+    //                 <p className={
+    //                   order.paymentInfo && order.paymentInfo.status === "succeeded" ? "green" : "red"
+    //                 }>
+    //                   {
+    //                     order.paymentInfo && order.paymentInfo.status === "succeeded" ? "PAID" : "NOT PAID"
+    //                   }
+
+    //                 </p>
+
+    //                 <div>
+    //                   <p>Total Price :<span>₹{order.price && order.price.toFixed(1)} </span></p>
+
+    //                 </div>
+    //                 <div>
+    //                   <b><p>Order Status</p></b>
+    //                   <p
+    //                     className={
+    //                       order.orderStatus && order.orderStatus === "Delivered"
+    //                         ? "greenColor"
+    //                         : "redColor"
+    //                     }
+    //                   >
+    //                     {order.orderStatus && order.orderStatus}
+    //                   </p>
+
+
+    //                 </div>
+    //                 <div
+    //                   style={{
+    //                     display: order.orderStatus === "Delivered" ? "none" : "block",
+    //                   }}
+    //                 >
+    //                   <form
+    //                     className="updateOrderForm"
+    //                     onSubmit={updateOrderSubmitHandler}
+    //                   >
+    //                     {/* <h1>Process Order</h1> */}
+
+    //                     <div>
+
+    //                       <select onChange={(e) => setStatus(e.target.value)}>
+    //                         <option value="">Choose Category</option>
+    //                         {order.orderStatus === "Processing" && (
+    //                           <option value="Shipped">Shipped</option>
+    //                         )}
+
+    //                         {order.orderStatus === "Shipped" && (
+    //                           <option value="Delivered">Delivered</option>
+    //                         )}
+    //                       </select>
+    //                     </div>
+
+    //                     <Button
+    //                       variant="secondary"
+    //                       id="createProductBtn"
+    //                       type="submit"
+    //                       disabled={
+    //                         loading ? true : false || status === "" ? true : false
+    //                       }
+    //                     >
+    //                       Process
+    //                     </Button>
+    //                   </form>
+    //                   <ToastContainer
+    //                     position="top-center"
+    //                     autoClose={1000}
+    //                     hideProgressBar={false}
+    //                     newestOnTop={false}
+    //                     closeOnClick
+    //                     rtl={false}
+    //                     pauseOnFocusLoss
+    //                     draggable
+    //                     pauseOnHover />
+
+
+    //                 </div>
+    //               </div>
+    //             </div>
+
+
+
+
+
+
+
+
+    //           </div>
+
+
+
+
+
+
+
+    //         </div>
+
+
+
+
+
+    //       </>
+    //   }
+
+
+    // </>
 
   )
 }

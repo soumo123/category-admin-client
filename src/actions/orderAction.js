@@ -84,8 +84,8 @@ export const getOrderDetails = (id) => async (dispatch) => {
         const token = localStorage.getItem('token')
         dispatch({ type: ORDER_DETAILS_REQUEST })
 
-        const { data } = await axios.get(`${process.env.REACT_APP_PRODUCTION_URL}/api/soummya/order/${id}/${token}`)
-        dispatch({ type: ORDER_DETAILS_SUCCESS, payload: data.order })
+        const { data } = await axios.get(`${process.env.REACT_APP_PRODUCTION_URL}/api/soummya/cat-admin/order/${token}?productId=${id}`)
+        dispatch({ type: ORDER_DETAILS_SUCCESS, payload: data })
 
 
 
@@ -115,7 +115,6 @@ export const getAllOrders = (user_id) => async (dispatch) => {
         }
 
         const { data } = await axios.post(`${process.env.REACT_APP_PRODUCTION_URL}/api/soummya/cat-admin/orders/${token}`,user_id,config)
-        console.log()
         dispatch({ type: ALL_ORDER_SUCCESS, payload: data.orders })
 
 

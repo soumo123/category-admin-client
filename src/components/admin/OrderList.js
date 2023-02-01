@@ -40,8 +40,9 @@ const OrderList = () => {
           dispatch({type:DELETE_ORDER_RESET})
           
         }
-
+        
         dispatch(getAllOrders({user_id:user?._id}));
+       
     }, [error, dispatch,alert, isDeleted]);
 
 
@@ -73,14 +74,13 @@ const OrderList = () => {
             minWidth: 250,
             flex: 0.3,
           },
-        {
+          {
             field: "itemsQty",
             headerName: "Items Qty",
             type: "number",
             minWidth: 150,
             flex: 0.3,
         },
-
         {
             field: "amount",
             headerName: "Amount",
@@ -98,7 +98,9 @@ const OrderList = () => {
             renderCell: (params) => {
                 return (
                     <>
-                        <Link to={`/admin/order/${params.getValue(params.id, "id")}`}>
+                    
+                        <Link to={`/admin/order/${params.id}`}>
+                            
                             <EditIcon />
                         </Link>
                     </>
@@ -113,11 +115,11 @@ const OrderList = () => {
         orders.map((item) => {
             rows.push({
                 id: item._id,
-                itemsQty: item.orderItems.length,
-                amount: item.totalPrice,
-                status: item.orderStatus,
+                itemsQty: item.quantity,
+                amount: item.price,
+                status: item.status,
                 createdAt:new Date(item.createdAt).toLocaleDateString('en-GB'),
-                deliveredAt:new Date(item.deliveredAt).toLocaleDateString('en-GB'),
+                deliveredAt:new Date(item.deliveryTime).toLocaleDateString('en-GB'),
               
             });
         });

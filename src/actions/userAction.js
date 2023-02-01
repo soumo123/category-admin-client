@@ -72,7 +72,7 @@ export const login = (email, password) => async (dispatch) => {
 
 //registration
 export const register = (userData) => async (dispatch) => {
-
+console.log("userData",userData)
     try {
         dispatch({ type: REGISTER_USER_REQUEST })
         const config = {
@@ -82,6 +82,7 @@ export const register = (userData) => async (dispatch) => {
         }
         const link  =`${process.env.REACT_APP_PRODUCTION_URL}/api/soummya/register`
         const { data } = await axios.post(link, userData, config)
+        HTMLFormControlsCollection.log("data",data)
         dispatch({ type: REGISTER_USER_SUCCESS, payload: data.user })
         
     } catch (error) {

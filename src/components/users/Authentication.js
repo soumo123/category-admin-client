@@ -1,9 +1,9 @@
-import React,{useRef,useState,useEffect} from 'react'
+import React, { useRef, useState, useEffect } from 'react'
 import '../../css/authentication.css'
-import {Link,useLocation} from 'react-router-dom'
-import {login,register,getProclearErrors} from '../../actions/userAction'
-import {useSelector,useDispatch} from 'react-redux'
-import {useAlert} from 'react-alert'
+import { Link, useLocation } from 'react-router-dom'
+import { login, register, getProclearErrors } from '../../actions/userAction'
+import { useSelector, useDispatch } from 'react-redux'
+import { useAlert } from 'react-alert'
 import Loader from '../layout/loader/Loader'
 import { useNavigate } from "react-router-dom"
 import { ToastContainer, toast } from 'react-toastify';
@@ -11,113 +11,122 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const Authentication = () => {
 
-const dispatch = useDispatch()
-const {error,loading,isAuthenticated,isRegistered} = useSelector((state)=>state.user)
+  const dispatch = useDispatch()
+  const { error, loading, isAuthenticated, isRegistered } = useSelector((state) => state.user)
 
 
-const navigate = useNavigate()
-const loginTab = useRef(null)
-const registerTab = useRef(null)
-const switcherTab = useRef(null)
+  const navigate = useNavigate()
+  const loginTab = useRef(null)
+  const registerTab = useRef(null)
+  const switcherTab = useRef(null)
 
-const[loginEmail,setLoginEmail] = useState("")
-const[loginPassword,setLoginPassword] = useState("")
+  const [loginEmail, setLoginEmail] = useState("")
+  const [loginPassword, setLoginPassword] = useState("")
 
-const[user,setUser] = useState({
-  name:"",email:"",password:"", number:""
-})
+  const [user, setUser] = useState({
+    name: "", email: "", password: "", number: "", gender: "", aadhar_card: ""
+  })
 
-const { name,email,password,number} = user
-const [avatar,setAvatar] = useState()
-const [avatarPreview,setAvatarPreview] = useState("/profile.png")
+  const { name, email, password, number,gender,aadhar_card } = user
+  const [avatar, setAvatar] = useState()
+  const [avatarPreview, setAvatarPreview] = useState("/profile.png")
 
-const loginSubmit = (e)=>{
-  e.preventDefault()
-  dispatch(login(loginEmail,loginPassword))
-}
+  const loginSubmit = (e) => {
+    e.preventDefault()
+    dispatch(login(loginEmail, loginPassword))
+  }
 
 
-const registerSubmit = (e)=>{
-  e.preventDefault();
+  const registerSubmit = (e) => {
+    e.preventDefault();
 
-  const myForm = new FormData()
-  myForm.set("name",name);
-  myForm.set("email",email);
-  myForm.set("password",password);
-  myForm.set("number",number);
-  myForm.set("avatar",avatar);
-  dispatch(register(myForm));
- 
+    const myForm = new FormData()
+    myForm.set("name", name);
+    myForm.set("email", email);
+    myForm.set("password", password);
+    myForm.set("number", number);
+    myForm.set("gender", gender);
+    myForm.set("aadhar_card", aadhar_card)
+    myForm.set("avatar", avatar);
+    dispatch(register(myForm));
 
-}
 
-const registerDataChange = (e)=>{
-  if(e.target.name==="avatar"){
+  }
+
+  const registerDataChange = (e) => {
+    if (e.target.name === "avatar") {
       const reader = new FileReader();
-      reader.onload = ()=>{
-        if(reader.readyState===2){
-            setAvatarPreview(reader.result)
-            setAvatar(reader.result)
+      reader.onload = () => {
+        if (reader.readyState === 2) {
+          setAvatarPreview(reader.result)
+          setAvatar(reader.result)
         }
       }
       reader.readAsDataURL(e.target.files[0])
-  }else{
-    setUser({...user,[e.target.name]:e.target.value})
-  }
-}
-
-
-// const redirect = location.search ? location.search.split("=")[1] : "/account";
-
-useEffect(() => {
-  if(!user){
-    toast.error("Invalid Credentials")
-    dispatch(getProclearErrors())
-  }
-  if(isAuthenticated){
-    toast.success("Login Succesfull ");
-    setInterval(() => {
-      window.location.reload();
-    }, 2000);
-    navigate('/')
-  }
-  if(isRegistered){
-    toast.success("Registration Succesfull ");
-    navigate('/login')
-  }
-  if(isRegistered==false){
-    toast.error(error);
-    navigate('/login')
+    } else {
+      setUser({ ...user, [e.target.name]: e.target.value })
+    }
   }
 
-  }, [dispatch,toast,isAuthenticated,navigate,user,isRegistered])
-  
+
+  // const redirect = location.search ? location.search.split("=")[1] : "/account";
+
+  useEffect(() => {
+    if (!user) {
+      toast.error("Invalid Credentials")
+      dispatch(getProclearErrors())
+    }
+    if (isAuthenticated) {
+      toast.success("Login Succesfull ");
+      setInterval(() => {
+        window.location.reload();
+      }, 2000);
+      navigate('/')
+    }
+    if (isRegistered) {
+      toast.success("Registration Succesfull ");
+      navigate('/login')
+    }
+    if (isRegistered == false) {
+      toast.error(error);
+      navigate('/login')
+    }
+
+  }, [dispatch, toast, isAuthenticated, navigate, user, isRegistered])
 
 
 
-const switchTabs = (e,tab)=>{
-  if (tab === "login") {
-    switcherTab.current.classList.add("shiftToNeutral");
-    switcherTab.current.classList.remove("shiftToRight");
+const genders = [
+  "Male",
+  "Female",
+  "Not to Disclosed"
+]
 
-    registerTab.current.classList.remove("shiftToNeutralForm");
-    loginTab.current.classList.remove("shiftToLeft");
+
+
+  const switchTabs = (e, tab) => {
+    if (tab === "login") {
+      switcherTab.current.classList.add("shiftToNeutral");
+      switcherTab.current.classList.remove("shiftToRight");
+
+      registerTab.current.classList.remove("shiftToNeutralForm");
+      loginTab.current.classList.remove("shiftToLeft");
+    }
+    if (tab === "register") {
+      switcherTab.current.classList.add("shiftToRight");
+      switcherTab.current.classList.remove("shiftToNeutral");
+
+      registerTab.current.classList.add("shiftToNeutralForm");
+      loginTab.current.classList.add("shiftToLeft");
+    }
   }
-  if (tab === "register") {
-    switcherTab.current.classList.add("shiftToRight");
-    switcherTab.current.classList.remove("shiftToNeutral");
-
-    registerTab.current.classList.add("shiftToNeutralForm");
-    loginTab.current.classList.add("shiftToLeft");
-  }
-}
 
   return (
-   <>
-   {
-     loading ?( <Loader /> ):(
-      
-     <div className="LoginSignUpContainer">
+    <>
+      {
+        loading ? (<Loader />) : (
+
+          <div className="LoginSignUpContainer">
             <div className="LoginSignUpBox">
               <div>
                 <div className="login_signUp_toggle">
@@ -128,52 +137,52 @@ const switchTabs = (e,tab)=>{
               </div>
               <form className="loginForm" ref={loginTab} onSubmit={loginSubmit}>
                 <div className="loginEmail">
-                <i className="fa fa-envelope-o" aria-hidden="true"></i>
+                  <i className="fa fa-envelope-o" aria-hidden="true"></i>
                   <input
                     type="email"
                     placeholder="Email"
-          
+
                     value={loginEmail}
                     onChange={(e) => setLoginEmail(e.target.value)}
                   />
                 </div>
                 <div className="loginPassword">
-                <i className="fa fa-lock" aria-hidden="true"></i>
+                  <i className="fa fa-lock" aria-hidden="true"></i>
 
                   <input
                     type="password"
                     placeholder="Password"
-           
+
                     value={loginPassword}
                     onChange={(e) => setLoginPassword(e.target.value)}
                   />
                 </div>
-                
+
                 <input type="submit" value="Login" className="loginBtn" />
-               <div className="row">
-               <div className="col-lg-12 text-center">
-                {/* <div className="phoneiocn">
+                <div className="row">
+                  <div className="col-lg-12 text-center">
+                    {/* <div className="phoneiocn">
                 <i class="fa fa-mobile" aria-hidden="true"></i>
                 </div> */}
-               <Link to="/otp/verification"className="btn btn-primary btn-sm otpbtn">
-                Login With Number</Link>
-                    </div>
-               </div>
-                
+                    <Link to="/otp/verification" className="btn btn-primary btn-sm otpbtn">
+                      Login With Number</Link>
+                  </div>
+                </div>
+
               </form>
-              
+
 
               <ToastContainer
-                  position="top-center"
-                  autoClose={2000}
-                  hideProgressBar={false}
-                  newestOnTop={false}
-                  closeOnClick
-                  rtl={false}
-                  pauseOnFocusLoss
-                  draggable
-                  pauseOnHover />
-              
+                position="top-center"
+                autoClose={2000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover />
+
               <form
                 className="signUpForm"
                 ref={registerTab}
@@ -181,7 +190,7 @@ const switchTabs = (e,tab)=>{
                 onSubmit={registerSubmit}
               >
                 <div className="signUpName">
-                <i className="fa fa-user" aria-hidden="true"></i>
+                  <i className="fa fa-user" aria-hidden="true"></i>
                   <input
                     type="text"
                     placeholder="Name"
@@ -193,7 +202,7 @@ const switchTabs = (e,tab)=>{
                 </div>
 
                 <div className="signUpName">
-                <i className="fa fa-user" aria-hidden="true"></i>
+                  <i className="fa fa-user" aria-hidden="true"></i>
                   <input
                     type="number"
                     placeholder="Phone Number"
@@ -204,14 +213,35 @@ const switchTabs = (e,tab)=>{
                   />
                 </div>
 
+                <div className="signUpName">
 
+                  <select onChange={registerDataChange}>
+                    <option value="">Gender</option>
+                    {
+                      genders.map((gen) => (
+                        <option key={gen} value={gen}>{gen}</option>
+                      ))
+                    }
 
+                  </select>
+                </div>
 
+                <div className="signUpName">
+                  <i className="fa fa-user" aria-hidden="true"></i>
+                  <input
+                    type="text"
+                    placeholder="AAdhar Card No."
+                    required
+                    name="aadhar_card"
+                    value={aadhar_card}
+                    onChange={registerDataChange}
+                  />
+                </div>
 
 
 
                 <div className="signUpEmail">
-                <i className="fa fa-envelope-o" aria-hidden="true"></i>
+                  <i className="fa fa-envelope-o" aria-hidden="true"></i>
                   <input
                     type="email"
                     placeholder="Email"
@@ -222,7 +252,7 @@ const switchTabs = (e,tab)=>{
                   />
                 </div>
                 <div className="signUpPassword">
-                <i class="fa fa-unlock-alt" aria-hidden="true"></i>
+                  <i class="fa fa-unlock-alt" aria-hidden="true"></i>
                   <input
                     type="password"
                     placeholder="Password"
@@ -247,11 +277,11 @@ const switchTabs = (e,tab)=>{
             </div>
           </div>
 
-          
-     )}
-    
-    
-   </>
+
+        )}
+
+
+    </>
   )
 }
 
