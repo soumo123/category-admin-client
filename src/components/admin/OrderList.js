@@ -134,7 +134,7 @@ const OrderList = () => {
                 <div className="row display-table-row">
                     <Sidebar />
                     <div className="productListContainer">
-                        <h1 id="productListHeading">ALL PRODUCTS</h1>
+                        <h1 id="productListHeading">ALL Orders</h1>
 
                         <DataGrid
                             rows={rows}
