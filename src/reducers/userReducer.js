@@ -41,7 +41,8 @@ import {
     OTP_REQUEST,
     VERIFY_REQUEST,
     VERIFY_SUCCESS,
-    VERIFY_FAIL
+    VERIFY_FAIL,
+    REGISTER_USER_RESET
 
 
 } from '../constants/userConstant'
@@ -121,7 +122,10 @@ export const userReducer = (state = { user: {} }, action) => {
                 user: null,
                 error: action.payload
             }
-
+        case REGISTER_USER_RESET :
+            return {
+                ...state
+            }
     
         case CLEAR_ERRORS:
             return {
@@ -132,7 +136,6 @@ export const userReducer = (state = { user: {} }, action) => {
             return state
     }
 }
-
 
 
 

@@ -39,8 +39,9 @@ products && products.map((item)=>{
 
 
 useEffect(() => {
-  dispatch(getAdminProducts({user_id:user?._id}));
-  dispatch(getAllOrders({user_id:user?._id}));
+  dispatch(getAdminProducts({user_id:user?._id,name:""}));
+  dispatch(getAllOrders({user_id:user?._id}))
+
 }, [dispatch,user]);
 
   const lineState = {

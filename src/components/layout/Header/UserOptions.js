@@ -71,7 +71,15 @@ const UserOptions = () => {
                         Logout</p></li>
 
 
-                    </ul> :<></>
+                    </ul> :<>
+                    
+                    <ul class="dropdown-menu">
+                      <li><p className="dropdown-item" onClick={logout} ><i class="fa fa-sign-out" aria-hidden="true"></i>
+                        Logout</p></li>
+
+
+                    </ul>
+                    </>
                 }
 
 

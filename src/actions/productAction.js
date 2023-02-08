@@ -135,7 +135,7 @@ export const createProduct = (productData) => async (dispatch) => {
 
 
 //get products by admin
-export const getAdminProducts = (user_id) => async (dispatch) => {
+export const getAdminProducts = ({user_id,name}) => async (dispatch) => {
 
     try {
 
@@ -150,7 +150,7 @@ export const getAdminProducts = (user_id) => async (dispatch) => {
         }
 
 
-        const {data} = await axios.post(`${process.env.REACT_APP_PRODUCTION_URL}/api/soummya/cat-admin/products/${token}`,user_id,config)
+        const {data} = await axios.get(`${process.env.REACT_APP_PRODUCTION_URL}/api/soummya/cat-admin/products/${token}/${user_id}?name=${name}`)
         console.log("dataaaaaa",data)
       
         dispatch({type:ADMIN_PRODUCT_SUCCESS,payload:data.products})

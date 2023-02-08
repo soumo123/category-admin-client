@@ -82,7 +82,6 @@ console.log("userData",userData)
         }
         const link  =`${process.env.REACT_APP_PRODUCTION_URL}/api/soummya/register`
         const { data } = await axios.post(link, userData, config)
-        HTMLFormControlsCollection.log("data",data)
         dispatch({ type: REGISTER_USER_SUCCESS, payload: data.user })
         
     } catch (error) {

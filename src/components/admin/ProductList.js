@@ -16,6 +16,8 @@ const ProductList = () => {
   const alert = useAlert()
   const dispatch = useDispatch()
   const navigate = useNavigate()
+  const[searchData,setSearchData] = useState("")
+
   const {error,products} = useSelector((state) => state.products)
   const{user} = useSelector((state)=>state.user)
   const{isDeleted} = useSelector((state) => state.productAdmin)
@@ -33,14 +35,14 @@ const deleteProductHandler = (id)=>{
       alert.error(error);
       dispatch(getProclearErrors());
     }
-    dispatch(getAdminProducts({user_id:user?._id}));
+    dispatch(getAdminProducts({user_id:user?._id,name:searchData}));
 
     if(isDeleted){
       alert.success("Product Deleted Succesfully")
       dispatch({type:DELETE_PRODUCT_RESET})
       // navigate("/admin/dashboard");
     }
-  }, [error,alert,dispatch,navigate,isDeleted]);
+  }, [error,alert,dispatch,navigate,isDeleted,searchData]);
   
 
  
@@ -142,6 +144,15 @@ const deleteProductHandler = (id)=>{
       <div className="row display-table-row">
   <Sidebar/>
   <div className="productListContainer">
+  <div className="input-group">
+  <div class="form-outline">
+    <input type="search" id="form1" class="form-control" placeholder='search..' onChange= {(e)=>setSearchData(e.target.value)}/>
+    {/* <label className="form-label" for="form1">Search Products..</label> */}
+  </div>
+  <button type="button" className="btn btn-primary" style={{position:'absolute',left:'88%',top:'5px'}}>
+    <i class="fas fa-search" ></i>
+  </button>
+</div>
     <h1 id="productListHeading">ALL PRODUCTS</h1>
 
     <DataGrid
