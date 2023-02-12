@@ -167,13 +167,10 @@ const createProductImagesChange = (e) => {
         <div className="container-fluid display-table">
       <div className="row display-table-row">
         <Sidebar/>
-            <div className="container">
-                <div className="row justify-content-center">
-                    <div className="col-lg-12">
-
-                        <div className="formdiv">
-                            <h1>Add New Product</h1>
-                            <form className="form"
+            <div className="col-md-10 col-sm-11 display-table-cell v-align">
+            <div className="formdiv">
+                            <h4 className="mt-3">Add New Product</h4>
+                            <form className="form mt-3"
                                 encType="multipart/form-data"
                                 onSubmit={createProductSubmitHandler}
                             >
@@ -226,7 +223,7 @@ const createProductImagesChange = (e) => {
                                     <div className="col-sm-4 ">
                                         <div className="mb-3">
                                             <label className="form-label">Category</label>
-                                        <select onChange={(e)=>setCategory(e.target.value)}>
+                                        <select className="form-control inputtext" onChange={(e)=>setCategory(e.target.value)}>
                                             <option value="">Choose Category</option> 
                                             {
                                                 categories.map((cate)=>(
@@ -358,7 +355,7 @@ const createProductImagesChange = (e) => {
                                             <input
                                                 type="submit"
                                                 value="Continue"
-                                                className="button cart_button_checkout"
+                                                className="button btn btn-primary"
                                                 disabled={loading ? true : false}
                                             />
                                         </div>
@@ -366,8 +363,6 @@ const createProductImagesChange = (e) => {
                                 </div>
                             </form>
                         </div>
-                    </div>
-                </div>
             </div>
 </div>
 <ToastContainer

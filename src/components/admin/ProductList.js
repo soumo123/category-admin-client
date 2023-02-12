@@ -1,7 +1,7 @@
-import React,{useState,useEffect} from 'react'
-import {Link,useNavigate} from 'react-router-dom'
-import {useSelector,useDispatch} from 'react-redux'
-import { getAdminProducts,getProclearErrors,deleteProduct } from '../../actions/productAction'
+import React, { useState, useEffect } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+import { useSelector, useDispatch } from 'react-redux'
+import { getAdminProducts, getProclearErrors, deleteProduct } from '../../actions/productAction'
 import { DataGrid } from "@material-ui/data-grid";
 import { Button } from "@material-ui/core";
 import EditIcon from "@material-ui/icons/Edit";
@@ -16,17 +16,17 @@ const ProductList = () => {
   const alert = useAlert()
   const dispatch = useDispatch()
   const navigate = useNavigate()
-  const[searchData,setSearchData] = useState("")
+  const [searchData, setSearchData] = useState("")
 
-  const {error,products} = useSelector((state) => state.products)
-  const{user} = useSelector((state)=>state.user)
-  const{isDeleted} = useSelector((state) => state.productAdmin)
+  const { error, products } = useSelector((state) => state.products)
+  const { user } = useSelector((state) => state.user)
+  const { isDeleted } = useSelector((state) => state.productAdmin)
 
-const deleteProductHandler = (id)=>{
-  dispatch(deleteProduct(id))
+  const deleteProductHandler = (id) => {
+    dispatch(deleteProduct(id))
 
-  // navigate("/admin/dashboard");
-  // dispatch({type:DELETE_PRODUCT_RESET})
+    // navigate("/admin/dashboard");
+    // dispatch({type:DELETE_PRODUCT_RESET})
 
   }
 
@@ -35,38 +35,35 @@ const deleteProductHandler = (id)=>{
       alert.error(error);
       dispatch(getProclearErrors());
     }
-    dispatch(getAdminProducts({user_id:user?._id,name:searchData}));
+    dispatch(getAdminProducts({ user_id: user?._id, name: searchData }));
 
-    if(isDeleted){
+    if (isDeleted) {
       alert.success("Product Deleted Succesfully")
-      dispatch({type:DELETE_PRODUCT_RESET})
+      dispatch({ type: DELETE_PRODUCT_RESET })
       // navigate("/admin/dashboard");
     }
-  }, [error,alert,dispatch,navigate,isDeleted,searchData]);
-  
+  }, [error, alert, dispatch, navigate, isDeleted, searchData]);
 
- 
+
+
 
   const columns = [
     { field: "id", headerName: "Product ID", minWidth: 200, flex: 0.5 },
 
     {
       field: "name",
-      headerName: "Name",
-      minWidth: 150,
+      headerName: "Name",      
       flex: 0.5,
     },
     {
       field: "createdAt",
-      headerName: "Date",
-      minWidth: 150,
+      headerName: "Date",      
       flex: 0.3,
     },
     {
       field: "stock",
       headerName: "Stock",
-      type: "number",
-      minWidth: 270,
+      type: "number",    
       flex: 0.5,
     },
 
@@ -81,14 +78,12 @@ const deleteProductHandler = (id)=>{
       field: "discount",
       headerName: "Discount",
       type: "number",
-      minWidth: 150,
       flex: 0.3,
     },
     {
       field: "actualpricebydiscount",
       headerName: "Actual-Price",
       type: "number",
-      minWidth: 150,
       flex: 0.3,
     },
 
@@ -96,7 +91,6 @@ const deleteProductHandler = (id)=>{
       field: "actions",
       flex: 0.3,
       headerName: "Actions",
-      minWidth: 150,
       type: "number",
       sortable: false,
       renderCell: (params) => {
@@ -126,11 +120,11 @@ const deleteProductHandler = (id)=>{
       rows.push({
         id: item._id,
         stock: item.stock,
-        price: `₹`+item.price,
-        discount:item && item.discount==0 ? "No Discount" : item.discount+`%`,
-        actualpricebydiscount:`₹`+item.actualpricebydiscount,
+        price: `₹` + item.price,
+        discount: item && item.discount == 0 ? "No Discount" : item.discount + `%`,
+        actualpricebydiscount: `₹` + item.actualpricebydiscount,
         name: item.name,
-        createdAt:new Date(item.createdAt).toLocaleDateString('en-GB')
+        createdAt: new Date(item.createdAt).toLocaleDateString('en-GB')
       });
     });
 
@@ -138,34 +132,36 @@ const deleteProductHandler = (id)=>{
 
   return (
     <>
-     <Metadata title={`ALL PRODUCTS - Admin`} />
+      <Metadata title={`ALL PRODUCTS - Admin`} />
 
-     <div className="container-fluid display-table">
-      <div className="row display-table-row">
-  <Sidebar/>
-  <div className="productListContainer">
-  <div className="input-group">
-  <div class="form-outline">
-    <input type="search" id="form1" class="form-control" placeholder='search..' onChange= {(e)=>setSearchData(e.target.value)}/>
-    {/* <label className="form-label" for="form1">Search Products..</label> */}
-  </div>
-  <button type="button" className="btn btn-primary" style={{position:'absolute',left:'88%',top:'5px'}}>
-    <i class="fas fa-search" ></i>
-  </button>
-</div>
-    <h1 id="productListHeading">ALL PRODUCTS</h1>
+      <div className="container-fluid display-table">
+        <div className="row display-table-row">
+          <Sidebar />
+          <div className="col-md-10 col-sm-11 display-table-cell v-align">
+            <div className="productListContainer ml-4">
+              <div className="input-group">
+                <div class="form-outline">
+                  <input type="search" id="form1" class="form-control" placeholder='search..' onChange={(e) => setSearchData(e.target.value)} />
+                  {/* <label className="form-label" for="form1">Search Products..</label> */}
+                </div>
+                <button type="button" className="btn btn-primary" style={{ position: 'absolute', left: '88%', top: '5px' }}>
+                  <i class="fas fa-search" ></i>
+                </button>
+              </div>
+              <h4 className="mt-3" id="productListHeading">All Products</h4>
 
-    <DataGrid
-      rows={rows}
-      columns={columns}
-      pageSize={10}
-      disableSelectionOnClick
-      className="productListTable"
-      autoHeight
-    />
-  </div>
-</div>
-</div>
+              <DataGrid
+                rows={rows}
+                columns={columns}
+                pageSize={10}
+                disableSelectionOnClick
+                className="productListTable mt-3"
+                autoHeight
+              />
+            </div>
+          </div>
+        </div>
+      </div>
     </>
   )
 }

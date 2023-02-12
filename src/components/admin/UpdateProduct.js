@@ -131,12 +131,13 @@ const UpdateProduct = () => {
     return (
         <>
             <Metadata title="Update Product" />
-            <div className="container">
-                <div className="row justify-content-center">
-                    <div className="col-lg-12">
+            <div className="container-fluid display-table">
+                <div className="row display-table-row">
+                <Sidebar/>
+                    <div className="col-md-10 col-sm-11 display-table-cell v-align">
 
                         <div className="formdiv">
-                            <h1>Update Product</h1>
+                            <h4>Update Product</h4>
                             <form className="form"
                                 encType="multipart/form-data"
                                 onSubmit={updateProductSubmitHandler}
@@ -188,7 +189,7 @@ const UpdateProduct = () => {
                                     <div className="col-sm-4 ">
                                         <div className="mb-3">
                                             <label className="form-label">Category</label>
-                                            <select value={category} onChange={(e) => setCategory(e.target.value)}>
+                                            <select className="form-control inputtext" value={category} onChange={(e) => setCategory(e.target.value)}>
                                                 <option value="">Choose Category</option>
                                                 {
                                                     categories.map((cate) => (
@@ -303,7 +304,7 @@ const UpdateProduct = () => {
                                             <input
                                                 type="submit"
                                                 value="Update"
-                                                className="button cart_button_checkout"
+                                                className="button btn btn-primary"
                                                 disabled={loading ? true : false}
                                             />
                                         </div>

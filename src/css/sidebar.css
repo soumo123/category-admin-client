@@ -200,12 +200,39 @@ li,ul{
     height: 100%;
 }
 
-.display-table-cell {
+/* .display-table-cell {
     display: table-cell;
     float: none;
     height: 100%;
+} */
+
+.processdetails{
+    padding:12px 34px;
+    flex: 1;
+}
+.processdetails ul li{
+    color: #4e4e4e;
+    line-height: 32px;
+    /* display: flex; */
+}
+.processimg{
+    flex: 1;
+}
+.w-15{
+    width: 9%
 }
 
+.processitem{
+    font-weight: 600;
+    margin-left: 12px;
+}
+.formdiv{
+    padding: 12px;
+}
+.inputtext {
+    border-radius: 0 !important;
+    height: 52px !important;
+}
 .v-align {
     vertical-align: top;
 }

@@ -54,7 +54,7 @@ const OrderList = () => {
         {
             field: "status",
             headerName: "Status",
-            minWidth: 150,
+           
             flex: 0.5,
             cellClassName: (params) => {
                 return params.getValue(params.id, "status") === "Delivered"
@@ -65,7 +65,7 @@ const OrderList = () => {
         {
             field: "createdAt",
             headerName: "Order Date",
-            minWidth: 150,
+           
             flex: 0.5,
           },
           {
@@ -78,7 +78,7 @@ const OrderList = () => {
             field: "itemsQty",
             headerName: "Items Qty",
             type: "number",
-            minWidth: 150,
+           
             flex: 0.3,
         },
         {
@@ -92,7 +92,7 @@ const OrderList = () => {
             field: "actions",
             flex: 0.3,
             headerName: "Actions",
-            minWidth: 150,
+           
             type: "number",
             sortable: false,
             renderCell: (params) => {
@@ -133,18 +133,20 @@ const OrderList = () => {
             <div className="container-fluid display-table">
                 <div className="row display-table-row">
                     <Sidebar />
-                    <div className="productListContainer">
-                        <h1 id="productListHeading">ALL Orders</h1>
+                    <div className="col-md-10 col-sm-11 display-table-cell v-align">
+                    <div className="productListContainer ml-4">
+                        <h4 className="mt-4" id="productListHeading">ALL Orders</h4>
 
                         <DataGrid
                             rows={rows}
                             columns={columns}
                             pageSize={10}
                             disableSelectionOnClick
-                            className="productListTable"
+                            className="productListTable mt-3"
                             autoHeight
                         />
                        
+                    </div>
                     </div>
                 </div>
             </div>

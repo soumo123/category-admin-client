@@ -64,7 +64,7 @@ useEffect(() => {
    
     <div className="container-fluid display-table">
        <Metadata title="Dashboard"/>
-      <div className="row display-table-row mt-5">
+      <div className="row display-table-row">
         <Sidebar />
         <div className="col-md-10 col-sm-11 display-table-cell v-align">
 

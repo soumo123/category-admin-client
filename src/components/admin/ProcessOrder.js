@@ -10,6 +10,7 @@ import Loader from "../layout/loader/Loader";
 import { UPDATE_ORDER_RESET } from '../../constants/orderConstant'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import '../../css/processorder.css'
 
 const ProcessOrder = () => {
 
@@ -63,49 +64,37 @@ const ProcessOrder = () => {
             <Metadata title="Process Order" />
             <div className="container">
               <div className="row mt-5 mb-5 justify-content-center">
-                <div className="col-sm-3">
+                
+                <div className="col-sm-12">
+
+                  <h2 className="text-center mb-5">Order Summary</h2>
                   {
                     order && order?.orders?.map((item) => (
 
-                      <div>
+                      <div className="d-sm-flex justify-content-center">
 
-                        <div key={item.product}>
+                        <div key={item.product} className="processimg mr-4">
                           <img className="img-fluid" src={item.image} alt="Product" />
 
                         </div>
 
-                        <div>
-
-                          <p>Prodcut Name : {item.name}</p>
-                          <p>Price :₹ {item.price}</p>
-                          <p>Quantity : {item.quantity}</p>
-                          <p>Delivery Date : {new Date(item.deliveryTime).toLocaleDateString('en-GB')}</p>
-                          <p>Customer Id : {item.user}</p>
-                          <div>
-                            <b><p>Order Status</p></b>
-                            <p
-                              className={
-                                item.status && item.status === "Delivered"
+                        <div className="processdetails border border-secondary mr-4">
+                        <h5><u>Product Details</u></h5>
+                          <ul>
+                            <li>Prodcut Name : <span className="processitem">{item.name}</span></li>
+                            <li>Price :₹ <span className="processitem">{item.price}</span></li>
+                            <li>Quantity : <span className="processitem">{item.quantity}</span></li>
+                            <li>Delivery Date :  <span className="processitem">{new Date(item.deliveryTime).toLocaleDateString('en-GB')}</span></li>
+                            <li>Customer Id :  <span className="processitem">{item.user}</span></li>
+                            <li>Order Status :  <span  className={
+                                item.status && item.status === " Delivered"
                                   ? "greenColor"
                                   : "redColor"
-                              }
-                            >
-                              {item.status}
-                            </p>
-                            <p>Customer Name : {order?.customer_name}</p>
-                            <div>
-                              <p>Address : <span>{order?.shippingDetails.address}</span></p>
-                              <p>City : <span>{order?.shippingDetails.city}</span></p>
-                              <p>State : <span>{order?.shippingDetails.state}</span></p>
-                              <p>Country : <span>{order?.shippingDetails.country}</span></p>
-                              <p>Pincode : <span>{order?.shippingDetails.pincode}</span></p>
-                              <p>Phone Number  : <span>{order?.shippingDetails.phoneNo}</span></p>
-
-
-
-
-
-                            </div>
+                              }>  {item.status}</span></li>
+                            
+                           
+                          </ul>          
+                          <div>
                             <div
                               style={{
                                 display: item.status === "Delivered" ? "none" : "block",
@@ -119,7 +108,7 @@ const ProcessOrder = () => {
 
                                 <div>
 
-                                  <select onChange={(e) => setStatus(e.target.value)}>
+                                  <select className="form-control inputtext" onChange={(e) => setStatus(e.target.value)}>
                                     <option value="">Choose Category</option>
                                     {item.status === "Processing" && (
                                       <option value="Shipped">Shipped</option>
@@ -131,8 +120,8 @@ const ProcessOrder = () => {
                                   </select>
                                 </div>
 
-                                <Button
-                                  variant="secondary"
+                                <button
+                                className="btn btn-primary mt-3"
                                   id="createProductBtn"
                                   type="submit"
                                   disabled={
@@ -140,7 +129,7 @@ const ProcessOrder = () => {
                                   }
                                 >
                                   Process
-                                </Button>
+                                </button>
                               </form>
                               <ToastContainer
                                 position="top-center"
@@ -162,6 +151,27 @@ const ProcessOrder = () => {
 
                           </div>
                         </div>
+
+
+                        <div className="processdetails border border-secondary">
+
+                                    <h5><u>Customer Details</u></h5>
+                        <ul>                        
+                            
+                            <li>Customer Name :  <span className="processitem">{order?.customer_name}</span></li>
+
+
+                            <li>Address : <span className="processitem">{order?.shippingDetails.address}</span></li>
+                            <li>City : <span  className="processitem">{order?.shippingDetails.city}</span></li>
+                            <li>State : <span className="processitem">{order?.shippingDetails.state}</span></li>
+                            <li>Country : <span className="processitem">{order?.shippingDetails.country}</span></li>
+                            <li>Pincode : <span className="processitem">{order?.shippingDetails.pincode}</span></li>
+                            <li>Phone Number  : <span className="processitem">+91 {order?.shippingDetails.phoneNo}</span></li>
+
+                          </ul>      
+
+
+                          </div>
 
                       </div>
 
