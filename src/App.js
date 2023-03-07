@@ -18,7 +18,7 @@ import OrderList from './components/admin/OrderList';
 import ProcessOrder from './components/admin/ProcessOrder';
 import Home from './components/users/Home'
 import Approved from './components/users/Approved';
-
+import OtpVerification from './components/users/OtpVerification';
 
 function App() {
 
@@ -51,7 +51,7 @@ const {order} = useSelector((state)=>state.newOrder)
       <Routes>
      
        <Route exact path="/login" element={<Authentication />} />
-   
+       <Route exact path="/otp/verification" element={<OtpVerification />} />
       {user?.role === "admin" ?  <Route exact path="/" element={<Dashboard/>}/> : user?.role=="user" ? <Route exact path="/" element={<Approved/>}/>:<Route exact path="/" element={<Home/>}/>}
       {user?.role === "admin" ?  <Route exact path="/admin/products" element={<ProductList/>}/> : user?.role ==="user" ? <Route exact path="/admin/prducts" element={<Dashboard/>}/> : <Route exact path="/admin/dashboard" element={<Dashboard/>}/>}
       {user?.role === "admin" ?  <Route exact path="/admin/create" element={<NewProduct/>}/> : user?.role ==="user" ? <Route exact path="/admin/prducts" element={<Dashboard/>}/> : <Route exact path="/admin/dashboard" element={<Dashboard/>}/>}

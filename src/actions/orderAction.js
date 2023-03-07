@@ -13,6 +13,9 @@ import {
     DELETE_ORDER_REQUEST,
     DELETE_ORDER_SUCCESS,
     DELETE_ORDER_FAIL,
+    STATUS_ORDER_REQUEST,
+    STATUS_ORDER_SUCCESS,
+    STATUS_ORDER_FAIL,
     MY_ORDER_FAIL, CLEAR_ERRORS, CANCEL_ORDER_REQUEST, CANCEL_ORDER_SUCCESS, CANCEL_ORDER_FAIL
 } from '../constants/orderConstant'
 import axios from 'axios'
@@ -132,7 +135,7 @@ export const getAllOrders = (user_id) => async (dispatch) => {
 
 
 
-export const updateOrder = (id,order) => async (dispatch) => {
+export const updateOrder = (order_id,paymentStatus) => async (dispatch) => {
 
     try {
         const token = localStorage.getItem('token')
@@ -145,7 +148,7 @@ export const updateOrder = (id,order) => async (dispatch) => {
             withCredentials: true
         }
 
-        const { data } = await axios.put(`${process.env.REACT_APP_PRODUCTION_URL}/api/soummya/admin/order/${id}/${token}`, order, config)
+        const { data } = await axios.put(`${process.env.REACT_APP_PRODUCTION_URL}/api/soummya/cat-admin/update-order/${token}?order_id=${order_id}`, paymentStatus, config)
         console.log("updatee",data)
         dispatch({ type: UPDATE_ORDER_SUCCESS, payload: data.success })
     } catch (error) {
@@ -222,6 +225,35 @@ console.log("id..........",order , id)
     }
 
 }
+
+
+
+//shipment status check//
+
+
+
+export const shipmentDetails = (order_id) => async (dispatch) => {
+
+    try {
+        console.log(order_id,"order_id")
+        const token = localStorage.getItem('token')
+        dispatch({ type: STATUS_ORDER_REQUEST })
+
+        const  data  = await axios.get(`${process.env.REACT_APP_PRODUCTION_URL}/api/soummya/shipment-status/${token}?order_id=${order_id}`)
+        dispatch({ type: STATUS_ORDER_SUCCESS, payload: data })
+
+
+    } catch (error) {
+        dispatch({ type: STATUS_ORDER_FAIL, payload: error.response.data.message })
+    }
+
+}
+
+
+
+
+
+
 
 
 

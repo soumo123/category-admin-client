@@ -88,7 +88,7 @@ useEffect(() => {
                         <input type="number" className="form-control input-edit" placeholder='Enter OTP' onChange={(e)=>setOtp(e.target.value)}/>
                         {/* <label className="pull-right resend-otp" >Resend otp</label> */}
                     </div>
-                    <button type="submit">Verify</button>
+                    <button type="submit" className="btn btn-primary">Verify</button>
                    
                 </div>
                 </form>

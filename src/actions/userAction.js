@@ -289,7 +289,8 @@ export const getOtpFunction = (number) => async (dispatch) => {
         const config = {
             headers: {
                 'Content-Type': "multipart/form-data"
-            }
+            },
+            withCredentials: false
         }
         const link  =`${process.env.REACT_APP_PRODUCTION_URL}/api/soummya/generate/otp`
         const { data } = await axios.put(link, number, config)
