@@ -89,6 +89,14 @@ const OrderList = () => {
             flex: 0.5,
         },
         {
+            field: "total",
+            headerName: "Total",
+            type: "number",
+            minWidth: 270,
+            flex: 0.5,
+        },
+        
+        {
             field: "actions",
             flex: 0.3,
             headerName: "Actions",
@@ -117,6 +125,7 @@ const OrderList = () => {
                 id: item._id,
                 itemsQty: item.quantity,
                 amount: item.price,
+                total:item.quantity*item.price,
                 // status: item.status,
                 createdAt:new Date(item.createdAt).toLocaleDateString('en-GB'),
                 deliveredAt:new Date(item.deliveryTime).toLocaleDateString('en-GB'),

@@ -83,6 +83,7 @@ const ProcessOrder = () => {
                             <li>Prodcut Name : <span className="processitem">{item.name}</span></li>
                             <li>Price :₹ <span className="processitem">{item.price}</span></li>
                             <li>Quantity : <span className="processitem">{item.quantity}</span></li>
+                            <li>Total Price: <span className="processitem">₹ {item.quantity*item.price}</span></li>
                             <li>Delivery Date :  <span className="processitem">{new Date(item.deliveryTime).toLocaleDateString('en-GB')}</span></li>
                             <li>Customer Id :  <span className="processitem">{item.user}</span></li>
                             <li>Order Status :  <span className={

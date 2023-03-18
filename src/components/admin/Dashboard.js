@@ -27,7 +27,12 @@ const{user} = useSelector((state)=>state.user)
 
 orders &&
   orders.forEach((item) => {
-    totalAmount += item.price;
+    if(item.done==="1"){
+      totalAmount += item.price;
+      
+    }else{
+      totalAmount = 0;
+    }
   });
 // console.log("orderssss", orders.length)
 
