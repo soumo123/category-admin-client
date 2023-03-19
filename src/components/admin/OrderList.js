@@ -11,7 +11,7 @@ import Metadata from '../layout/Metadata'
 import 'react-toastify/dist/ReactToastify.css';
 import { DELETE_ORDER_RESET } from '../../constants/orderConstant';
 import { useAlert } from 'react-alert'
-
+import '../../css/sidebar.css';
 
 const OrderList = () => {
 
@@ -23,10 +23,10 @@ const OrderList = () => {
     const{user} = useSelector((state)=>state.user)
     
 
-    const deleteOrderHandler = (id) => {
-        dispatch(deleteOrder(id))
+    // const deleteOrderHandler = (id) => {
+    //     dispatch(deleteOrder(id))
 
-    }
+    // }
 
     useEffect(() => {
         if (error) {
@@ -48,92 +48,6 @@ const OrderList = () => {
 
 
 
-    const columns = [
-        { field: "id", headerName: "Order ID", minWidth: 300, flex: 1 },
-
-        // {
-        //     field: "status",
-        //     headerName: "Status",
-           
-        //     flex: 0.5,
-        //     cellClassName: (params) => {
-        //         return params.getValue(params.id, "status") === "Delivered"
-        //             ? "greenColor"
-        //             : "redColor";
-        //     },
-        // },
-        {
-            field: "createdAt",
-            headerName: "Order Date",
-           
-            flex: 0.5,
-          },
-          {
-            field: "deliveredAt",
-            headerName: "Delivery Date",
-            minWidth: 250,
-            flex: 0.3,
-          },
-          {
-            field: "itemsQty",
-            headerName: "Items Qty",
-            type: "number",
-           
-            flex: 0.3,
-        },
-        {
-            field: "amount",
-            headerName: "Amount",
-            type: "number",
-            minWidth: 270,
-            flex: 0.5,
-        },
-        {
-            field: "total",
-            headerName: "Total",
-            type: "number",
-            minWidth: 270,
-            flex: 0.5,
-        },
-        
-        {
-            field: "actions",
-            flex: 0.3,
-            headerName: "Actions",
-           
-            type: "number",
-            sortable: false,
-            renderCell: (params) => {
-                return (
-                    <>
-                    
-                        <Link to={`/admin/order/${params.id}`}>
-                            
-                            <EditIcon />
-                        </Link>
-                    </>
-                );
-            },
-        },
-    ];
-
-    const rows = [];
-
-    orders &&
-        orders.map((item) => {
-            rows.push({
-                id: item._id,
-                itemsQty: item.quantity,
-                amount: item.price,
-                total:item.quantity*item.price,
-                // status: item.status,
-                createdAt:new Date(item.createdAt).toLocaleDateString('en-GB'),
-                deliveredAt:new Date(item.deliveryTime).toLocaleDateString('en-GB'),
-              
-            });
-        });
-
-
 
     return (
         <>
@@ -145,15 +59,62 @@ const OrderList = () => {
                     <div className="col-md-10 col-sm-11 display-table-cell v-align">
                     <div className="productListContainer ml-4">
                         <h4 className="mt-4" id="productListHeading">ALL Orders</h4>
+                        <p>{orders&&orders.length} orders</p>
+                        <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Quantity</th>
+                    <th scope="col">Amount</th>
+                    <th scope="col">Total</th>
+                    {/* <th scope="col">Created Time</th> */}
+                    <th scope="col">Delivery Time</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {
+                    orders && orders.map((ele) => (
+                      <tr className={ele.done==="1"?"disabled":""}>
+                        <th scope="row">{ele._id}</th>
+                        <td>{ele.quantity}</td>
+                        <td>{ele.price}</td>
+                        <td>{ele.price*ele.quantity}</td>
+                        {/* <td>{new Date(ele.createdAt).toLocaleDateString('en-GB')}</td> */}
+                        <td>{new Date(ele.deliveryTime).toLocaleDateString('en-GB')}</td>
+                        <td>
+                            {
+                                ele.done==="1" ?
+                                <p className="text-success">Delivered</p>:<p className="text-danger">Processing</p>
+                            }
+                            
+                        </td>
+                       {
+                        ele.done==="1" ?<Link to=""><td><EditIcon /></td></Link>:
+                        <Link to={`/admin/order/${ele._id}`}><td><EditIcon /></td></Link>
+                       }
+                       
+                        
+                       
+                      </tr>
 
-                        <DataGrid
+                    ))
+                  }
+
+
+                </tbody>
+              </table>
+                        {/* <DataGrid
                             rows={rows}
                             columns={columns}
                             pageSize={10}
                             disableSelectionOnClick
                             className="productListTable mt-3"
                             autoHeight
-                        />
+                        /> */}
+
+
                        
                     </div>
                     </div>

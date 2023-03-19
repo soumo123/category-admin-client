@@ -19,6 +19,8 @@ const ProcessOrder = () => {
 
   const statusData = useSelector((state) => state.statusCheck?.data)
   let track = statusData && statusData[0].paymentStatus
+  let resource_id = statusData && statusData[0].resource_id
+  console.log("resource_id",resource_id)
 
   const paramsId = useParams()
   const dispatch = useDispatch()
@@ -28,7 +30,7 @@ const ProcessOrder = () => {
   const updateOrderSubmitHandler = (e) => {
     e.preventDefault();
     console.log("status", status)
-    dispatch(updateOrder(paramsId.id, { paymentStatus: status }));
+    dispatch(updateOrder(paramsId.id, { paymentStatus: status,resource_id:resource_id }));
   };
 
 

@@ -52,18 +52,18 @@ const ProductList = () => {
 
     {
       field: "name",
-      headerName: "Name",      
+      headerName: "Name",
       flex: 0.5,
     },
     {
       field: "createdAt",
-      headerName: "Date",      
+      headerName: "Date",
       flex: 0.3,
     },
     {
       field: "stock",
       headerName: "Stock",
-      type: "number",    
+      type: "number",
       flex: 0.5,
     },
 
@@ -149,15 +149,53 @@ const ProductList = () => {
                 </button>
               </div>
               <h4 className="mt-3" id="productListHeading">All Products</h4>
+              <p>{products && products.length} products..</p>
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Product Name</th>
+                    <th scope="col">Created Time</th>
+                    <th scope="col">Stock</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Discount</th>
+                    <th scope="col">Actual Price</th>
+                    <th scope="col">Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {
+                    products && products.map((ele) => (
+                      <tr>
+                        <th scope="row">{ele._id}</th>
+                        <td>{ele.name}</td>
+                        <td>{new Date(ele.createdAt).toLocaleDateString('en-GB')}</td>
+                        <td>{ele.stock}</td>
+                        <td>{ele.price}</td>
+                        <td>{ele && ele.discount == 0 ? "No Discount" : ele.discount + `%`}</td>
+                        <td>{`₹` + ele.actualpricebydiscount}</td>
+                        
+                         <Link to={`/admin/product/${ele._id}`}><td><EditIcon /></td></Link>
+                       
+                      </tr>
 
-              <DataGrid
+                    ))
+                  }
+
+
+                </tbody>
+              </table>
+
+
+
+              {/* <DataGrid
                 rows={rows}
                 columns={columns}
                 pageSize={10}
                 disableSelectionOnClick
                 className="productListTable mt-3"
                 autoHeight
-              />
+              /> */}
             </div>
           </div>
         </div>

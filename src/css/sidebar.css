@@ -735,3 +735,8 @@ margin:auto
     margin:auto;
    
 }
+
+
+.disabled {
+    background-color: #d1d1e6;
+}
